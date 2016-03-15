@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "5A325D27CF17664AC16B2CD7B0123EA9AE3FCD86",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "5A325D27CF17664AC16B2CD7B0123EA9AE3FCD86" : 0,
+    "E7DF4E7715281412B4DE011B5CE8BA0D232DA9C3" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "0C873F2C-4F08-442C-B37E-C20735CDF295",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "5A325D27CF17664AC16B2CD7B0123EA9AE3FCD86" : "CoreWordsSearch\/",
+    "E7DF4E7715281412B4DE011B5CE8BA0D232DA9C3" : "CoreWordsSearch\/lib\/CoreCoord\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "CoreWordsSearch",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "xcode\/CoreWordsSearch.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/AmazingCow\/CoreWordsSearch.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5A325D27CF17664AC16B2CD7B0123EA9AE3FCD86"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/www.github.com\/amazingcow\/CoreCoord.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E7DF4E7715281412B4DE011B5CE8BA0D232DA9C3"
+    }
+  ]
+}
