@@ -1,0 +1,3 @@
+[submodule "lib/CoreCoord"]
+	path = lib/CoreCoord
+	url = http://www.github.com/amazingcow/CoreCoord.git
