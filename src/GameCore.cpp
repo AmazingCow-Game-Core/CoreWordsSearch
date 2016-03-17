@@ -56,13 +56,23 @@ const int GameCore::kUnlimitedHints = -1;
 const int GameCore::kUnlimitedTries = -1;
 
 // CTOR / DTOR //
-GameCore::GameCore(const Options &options, std::vector<std::string> wordsList) 
+GameCore::GameCore(const Options &options, std::vector<std::string> wordsList) :
+    //m_board - Will be initialized in GameCore::initBoard().
+    m_currTriesCount(0),
+    m_currHintsCount(0),
+    m_words(wordsList),
+    //m_foundWords - Default initialized.
+    m_remainingWords(wordsList),
+    //m_wordsCoords - Will be initialized in GameCore::initBoard().
+    m_options(options),
+    m_status(Status::Continue)
 {
-
+    initBoard();
+    initRandomNumGenerator();
 }
 GameCore::~GameCore()
 {
-
+    //Empty...
 }
 
 
@@ -224,7 +234,7 @@ std::string GameCore::coordsMakeWord(const CoreCoord::Coord::Vec &coords) const
 }
 
 std::string GameCore::getWordFromCoords(const CoreCoord::Coord::Vec &coords) const
-{
+{  
     std::stringstream ss;
     for(const auto &coord : coords)
         ss << getLetterAt(coord);
@@ -240,11 +250,24 @@ void GameCore::checkStatus()
 
 void GameCore::initBoard()
 {
-    //COWTODO: Implement.
+    //COWTODO:
+    m_board.reserve(m_options.boardHeight);
+    for(int i = 0; i < m_options.boardHeight; ++i)
+        m_board.push_back(std::vector<char>(m_options.boardWidth));
+    
+    
+}
+void GameCore::initRandomNumGenerator()
+{
+    //COWTODO: Change this to C++ style.
+    if(m_options.seed == GameCore::kRandomSeed)
+        m_options.seed = static_cast<int>(time(nullptr));
+    
+    srand(m_options.seed);
 }
 
 int GameCore::getRandomInt(int min, int max) const
 {
-    //COWTODO: Implement.
-    return 0;
+    //COWTODO: Change this to C++ style.
+    return min + (rand() % ((max + 1) - min));
 }
