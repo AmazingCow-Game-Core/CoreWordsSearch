@@ -141,9 +141,10 @@ private:
     void checkStatus();
 
     void initBoard();
-
+    void initRandomNumGenerator();
+    
     int getRandomInt(int min, int max) const;
-
+    
     // iVars //
 private:
     //Board
