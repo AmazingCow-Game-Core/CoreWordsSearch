@@ -63,9 +63,18 @@ void usage()
 
 int main(int argc, const char *argv[])
 {
-    if(argc != 2)
-        usage();
-
+//    if(argc != 2)
+//        usage();
+//
+    GameCore::Options options;
+    options.boardHeight = 5;
+    options.boardWidth  = 7;
+    
+    std::vector<std::string> words = {"Amazing", "Cow", "Games"};
+    GameCore core(options, words);
+    
+    
+    cout << core.ascii() << endl;
     // COWTODO: Implement the game.);=
 }
 
