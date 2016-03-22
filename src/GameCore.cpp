@@ -46,9 +46,9 @@
 #include <algorithm>
 #include <iterator>
 
+
 //Usings
 USING_NS_COREWORDSSEARCH;
-
 
 // Constants / Enums / Typedefs //
 const int GameCore::kRandomSeed     = -1;
@@ -67,9 +67,11 @@ GameCore::GameCore(const Options &options, std::vector<std::string> wordsList) :
     m_options(options),
     m_status(Status::Continue)
 {
-    initBoard();
     initRandomNumGenerator();
+    initOperandCoords();
+    initBoard();
 }
+
 GameCore::~GameCore()
 {
     //Empty...
@@ -200,6 +202,13 @@ std::string GameCore::ascii() const
 
 
 // Private Methods //
+//Other
+void GameCore::checkStatus()
+{
+    //COWTODO: Implement.
+}
+
+//Coords
 bool GameCore::isValidCoordSequence(const CoreCoord::Coord::Vec &coords) const
 {
     //COWTODO: Implement.
@@ -242,18 +251,33 @@ std::string GameCore::getWordFromCoords(const CoreCoord::Coord::Vec &coords) con
     return ss.str();
 }
 
-
-void GameCore::checkStatus()
+const CoreCoord::Coord& GameCore::getOperandCoordForDirection(WordPlacementDirection direction) const
 {
-    //COWTODO: Implement.
+    return m_operandDirectionCoords[static_cast<int>(direction)];
 }
 
+
+//Init
 void GameCore::initBoard()
 {
     //COWTODO:
     m_board.reserve(m_options.boardHeight);
     for(int i = 0; i < m_options.boardHeight; ++i)
         m_board.push_back(std::vector<char>(m_options.boardWidth));
+    
+
+    std::vector<std::string> orderedWords(std::begin(m_words),
+                                          std::end(m_words));
+    
+    //Sort backwards - The greater word will be placed on back of vector
+    //did this way to ease the pop_back calls.
+    std::sort(std::begin(m_words),
+              std::end(m_words),
+              [](const std::string &word1, const std::string &word2) {
+                  return word1.size() > word2.size();
+              });
+    
+    
     
     
 }
@@ -265,9 +289,54 @@ void GameCore::initRandomNumGenerator()
     
     srand(m_options.seed);
 }
+void GameCore::initOperandCoords()
+{
+    m_operandDirectionCoords = {
+        CoreCoord::Coord( 0, 1), //Horizontal
+        CoreCoord::Coord( 1, 0), //Vertical
+        CoreCoord::Coord(-1, 1), //DiagonalToTop
+        CoreCoord::Coord( 1, 1), //DiagonalToBottom
+    };
+}
 
+
+//Random
 int GameCore::getRandomInt(int min, int max) const
 {
     //COWTODO: Change this to C++ style.
     return min + (rand() % ((max + 1) - min));
+}
+CoreCoord::Coord GameCore::getRandomCoord() const
+{
+    return CoreCoord::Coord(getRandomInt(0, static_cast<int>(m_board.size())),     //y
+                            getRandomInt(0, static_cast<int>(m_board[0].size()))); //x
+                                         
+}
+CoreCoord::Coord GameCore::getRandomFreeCoord() const
+{
+    while(1)
+    {
+        const auto& coord = getRandomCoord();
+        if(getLetterAt(coord) == GameCore::kEmptyChar)
+            return coord;
+    }
+}
+
+
+//Word
+void GameCore::putWord(const std::string &word,
+                       CoreCoord::Coord coord,
+                       WordPlacementDirection direction)
+{
+    
+    for(int i = 0; i < word.size(); ++i)
+    {
+        putLetterAt(coord, word[i]);
+        coord += getOperandCoordForDirection(direction);
+    }
+}
+
+void GameCore::putLetterAt(const CoreCoord::Coord &coord, char ch)
+{
+    m_board[coord.y][coord.x] = ch;
 }

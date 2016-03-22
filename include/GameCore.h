@@ -60,6 +60,8 @@ public:
     static const int kUnlimitedHints;
     static const int kUnlimitedTries;
 
+private:
+    static const char kEmptyChar;
 
     // Inner Types //
 public:
@@ -83,7 +85,16 @@ public:
         CoreCoord::Coord::Vec coords;        
     };
 
+private:
+    enum class WordPlacementDirection
+    {
+        Horizontal,
+        Vertical,
+        DiagonalToTop,
+        DiagonalToBottom,
+    };
 
+    
     // CTOR / DTOR //
 public:
     GameCore(const Options &options, std::vector<std::string> wordsList);
@@ -133,17 +144,30 @@ public:
 
     // Private Methods //
 private:
-    bool isValidCoordSequence(const CoreCoord::Coord::Vec &coords) const;
-
-    std::string coordsMakeWord(const CoreCoord::Coord::Vec &coords) const;
-    std::string getWordFromCoords(const CoreCoord::Coord::Vec &coords) const;
-    
+    //Other
     void checkStatus();
 
+    //Coords
+    bool isValidCoordSequence(const CoreCoord::Coord::Vec &coords) const;
+    std::string coordsMakeWord(const CoreCoord::Coord::Vec &coords) const;
+    std::string getWordFromCoords(const CoreCoord::Coord::Vec &coords) const;
+    const CoreCoord::Coord& getOperandCoordForDirection(WordPlacementDirection direction) const;
+    
+    //Init
     void initBoard();
     void initRandomNumGenerator();
+    void initOperandCoords();
     
+    //Random
     int getRandomInt(int min, int max) const;
+    CoreCoord::Coord getRandomCoord() const;
+    CoreCoord::Coord getRandomFreeCoord() const;
+    
+    //Word
+    void putWord(const std::string &word,
+                 CoreCoord::Coord coord,
+                 WordPlacementDirection direction);
+    void putLetterAt(const CoreCoord::Coord &coord, char ch);
     
     // iVars //
 private:
@@ -165,6 +189,9 @@ private:
     
     //Status
     Status m_status;
+    
+    //Coords
+    CoreCoord::Coord::Vec m_operandDirectionCoords;
 };
 
 NS_COREWORDSSEARCH_END
